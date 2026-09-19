@@ -1,0 +1,98 @@
+# 泛化意图规则（不含具体实体名）
+intents:
+  - id: chitchat
+    patterns:
+      - "^(你好|您好|谢谢|你是谁|再见|你能做什么)"
+    default_template: chitchat
+
+  - id: enum_list
+    patterns:
+      - "有哪些"
+      - "都有什么"
+      - "列举"
+      - "包括哪些"
+      - "清单"
+    default_template: enum_by_focus_type
+
+  - id: enum_environment
+    patterns:
+      - "试验环境"
+      - "环境类型"
+      - "环境类别"
+    default_template: enum_environment
+
+  - id: enum_indicator
+    patterns:
+      - "考核指标"
+      - "全部指标"
+      - "指标清单"
+    default_template: enum_indicator
+
+  - id: enum_equipment_type
+    patterns:
+      - "装备类型"
+      - "装备类别"
+      - "二级装备"
+    default_template: enum_equipment_type
+
+  - id: enum_equipment
+    patterns:
+      - "有哪些装备"
+      - "装备清单"
+      - "登记了哪些装备"
+    default_template: enum_equipment
+
+  - id: doc_overview
+    patterns:
+      - "主要内容"
+      - "概述"
+      - "讲什么"
+      - "文档概述"
+      - "标准内容"
+    default_template: document_lookup
+
+  - id: doc_section
+    patterns:
+      - "第.{0,6}章"
+      - "第.{0,6}节"
+      - "章节"
+      - "条文"
+    default_template: standard_chapter
+
+  - id: doc_plan
+    patterns:
+      - "试验方案"
+    default_template: document_lookup
+
+  - id: doc_keyword
+    patterns:
+      - "标准"
+      - "GBT"
+      - "GJB"
+    default_template: document_lookup
+
+  - id: method_content
+    patterns:
+      - "试验方法"
+      - "方法内容"
+      - "SYNR"
+      - "试验过程"
+    default_template: method_by_project_or_indicator
+
+  - id: env_properties
+    patterns:
+      - "环境分类"
+      - "环境分级"
+      - "环境属性"
+      - "环境约束"
+    default_template: environment_properties
+
+  - id: equip_env_project
+    patterns:
+      - "环境.*试验项目"
+      - "装备.*环境"
+    default_template: equip_and_env_to_projects
+
+  - id: graph_default
+    patterns: []
+    default_template: equip_to_projects

@@ -1,0 +1,156 @@
+.knowledgeGraphContainer {
+  position: relative;
+  width: 100%;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.knowledgeGraphContainer.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  border: none;
+  border-radius: 0;
+  background: #fff;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fafafa;
+}
+
+.controlGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zoomLevel {
+  min-width: 50px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+
+.graphWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+}
+
+.graphArea {
+  width: 100%;
+  background: #fafbfc;
+}
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  text-align: center;
+  padding: 20px;
+}
+
+.legend {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+  min-width: 150px;
+}
+
+.legendTitle {
+  margin: 0 0 8px 0 !important;
+  font-size: 14px !important;
+}
+
+.legendItems {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .controlGroup {
+    flex-wrap: wrap;
+  }
+  
+  .legend {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    margin: 16px;
+    width: calc(100% - 32px);
+  }
+}
+
+/* 全屏模式下的调整 */
+.fullscreen .graphWrapper {
+  height: calc(100vh - 80px);
+}
+
+.fullscreen .graphArea {
+  height: 100%;
+}
+
+.fullscreen .controls {
+  padding: 16px 24px;
+}
+
+.fullscreen .legend {
+  bottom: 24px;
+  right: 24px;
+}

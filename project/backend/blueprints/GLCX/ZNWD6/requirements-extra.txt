@@ -1,0 +1,4 @@
+# ZNWD6 无额外 pip 依赖（复用 backend 与 ZNWD5 zvec 索引）。
+# 可选：在新机单独 conda env 中安装 backend/requirements.txt + zvec
+#
+# 环境变量见 README.md

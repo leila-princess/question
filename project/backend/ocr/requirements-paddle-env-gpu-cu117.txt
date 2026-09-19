@@ -1,0 +1,17 @@
+# 在 conda/venv「paddle_env」中安装 — 需本机 NVIDIA 驱动支持 CUDA 11.7 生态（与 CPU 版 paddlepaddle 二选一，勿混装）
+# 先装其余依赖，再按官方索引安装 GPU 版 Paddle（版本与 ocr_worker 中 PaddleOCR 2.7.3 匹配）：
+#
+#   pip install -r requirements-paddle-env-gpu-cu117.txt
+#   pip install paddlepaddle-gpu==2.6.2.post117 -i https://www.paddlepaddle.org.cn/packages/stable/cu117/
+#
+# 其他 CUDA 版本：到 https://www.paddlepaddle.org.cn/install/quick 选择对应 post12x 包，勿写死本文件中的 GPU 包行到错误 CUDA。
+#
+protobuf==3.20.3
+paddleocr==2.7.3
+numpy<2.0
+opencv-python-headless
+PyMuPDF
+pillow
+idna>=3.4
+certifi>=2023.5.7
+tqdm>=4.66

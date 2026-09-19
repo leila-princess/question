@@ -1,0 +1,111 @@
+/* src/styles/searchPage.css */
+.search-page-container {
+  padding: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.search-header {
+  margin-bottom: 24px;
+}
+
+.search-title {
+  margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.search-form {
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 400px !important;
+  margin-right: 16px;
+}
+
+.search-select {
+  width: 150px !important;
+  margin-right: 16px;
+}
+
+.search-button {
+  min-width: 100px;
+}
+
+.search-history {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #fafafa;
+  border-radius: 4px;
+}
+
+.history-label {
+  margin-right: 8px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.history-tag {
+  margin-right: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.history-tag:hover {
+  transform: translateY(-2px);
+}
+
+.search-tabs {
+  margin-top: 24px;
+}
+
+.card-container {
+  margin-top: 16px;
+}
+
+.search-result-card {
+  height: 100%;
+  transition: all 0.3s;
+}
+
+.search-result-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.node-name {
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.card-extra {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.relation-count {
+  display: flex;
+  align-items: center;
+}
+
+.relation-count .anticon {
+  margin-right: 4px;
+}
+
+.card-content {
+  margin-top: 8px;
+}
+
+.node-title {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+}

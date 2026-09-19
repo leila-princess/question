@@ -1,0 +1,24 @@
+{
+  "neo4j_uri": "bolt://localhost:7687",
+  "labels": {
+    "EquipmentType": 8,
+    "Equipment": 22,
+    "Environment": 12,
+    "TestProject": 66,
+    "Indicator": 60,
+    "TestMethod": 19,
+    "File": 67
+  },
+  "zvec_available": false,
+  "neo4j_version": "2025.06.2",
+  "zvec_graph_count": 0,
+  "zvec_doc_count": 0,
+  "zvec_backend": "fallback",
+  "znwd4_baseline": {
+    "source": "qa_benchmark_report_qwen25_14b_awq.md",
+    "overall_accuracy": 0.53,
+    "equip_indicator_accuracy": 0.188,
+    "vector_chapter_accuracy": 0.084,
+    "missing_entities_errors": 119
+  }
+}

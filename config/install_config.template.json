@@ -1,0 +1,15 @@
+{
+    "MinioExe":  "{InstallRoot}/runtime/minio/minio.exe",
+    "MineruEnv":  "agent",
+    "MySqlBin":  "{InstallRoot}/runtime/mysql/bin",
+    "MinioConsolePort":  "9001",
+    "MinioDataDir":  "{InstallRoot}/runtime/minio/data",
+    "ChromaPath":  "{InstallRoot}/data/chroma_data",
+    "ZvecDataPath":  "{InstallRoot}/project/backend/zvec_data",
+    "Neo4jHome":  "{InstallRoot}/runtime/neo4j",
+    "MySqlDataDir":  "{InstallRoot}/runtime/mysql/data",
+    "MineruProfile":  "local",
+    "ProjectRoot":  "{InstallRoot}/project",
+    "InstallRoot":  "{InstallRoot}",
+    "CondaBase":  "{InstallRoot}/runtime/miniconda3"
+}

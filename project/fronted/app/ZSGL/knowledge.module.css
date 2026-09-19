@@ -1,0 +1,551 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e8f0fe 100%);
+}
+
+/* 侧边栏样式 */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebarHeader {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebarHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebarMenu {
+  padding: 20px 0;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  gap: 10px;
+}
+
+.menuItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-left-color: #3498db;
+  text-decoration: none;
+}
+
+.menuItem.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-left-color: #3498db;
+}
+
+/* 主内容区域 */
+.mainContent {
+  margin-left: 260px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.mainContent.expanded {
+  margin-left: 0;
+}
+
+.topBar {
+  background: white;
+  padding: 15px 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebarToggle {
+  display: none;
+}
+
+.searchBox {
+  position: relative;
+  width: 300px;
+}
+
+.searchBox input {
+  padding-left: 40px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  padding-right: 40px;
+  width: 100%;
+}
+
+.searchBox svg {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userGreeting {
+  color: #6c757d;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #3498db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+.contentArea {
+  padding: 30px;
+}
+
+/* 知识库统计 */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.statCard {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.statIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: 0 auto 15px;
+}
+
+.statIcon.blue {
+  background: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.statIcon.green {
+  background: rgba(39, 174, 96, 0.1);
+  color: #27ae60;
+}
+
+.statIcon.orange {
+  background: rgba(243, 156, 18, 0.1);
+  color: #f39c12;
+}
+
+.statIcon.red {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.statLabel {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+/* 知识管理标签页 */
+.knowledgeTabs {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.tabNav {
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 20px;
+}
+
+.tabItem {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.tabItem:hover {
+  color: #3498db;
+}
+
+.tabItem.active {
+  color: #3498db;
+}
+
+.tabItem.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #3498db;
+}
+
+/* 文件管理 */
+.fileManager {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.fileToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.fileActions {
+  display: flex;
+  gap: 10px;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 5px;
+}
+
+.fileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.fileItem {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.fileItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.fileCheckbox {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: none;
+}
+
+.fileItem:hover .fileCheckbox {
+  display: block;
+}
+
+.fileIcon {
+  font-size: 3rem;
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.fileName {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileInfo {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* 知识图谱 */
+.knowledgeGraph {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  height: 800px;
+  position: relative;
+}
+
+.graphControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.graphCanvas {
+  width: 100%;
+  height: 400px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+}
+
+.graphPlaceholder {
+  text-align: center;
+}
+
+.graphPlaceholder svg {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.graphPlaceholder p {
+  margin: 10px 0 5px;
+}
+
+.graphPlaceholder small {
+  color: #6c757d;
+}
+
+.graphLegend {
+  margin-top: 20px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.legendColorPrimary {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1890ff;
+}
+
+.legendColorSuccess {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #52c41a;
+}
+
+.legendColorWarning {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #faad14;
+}
+
+.legendColorInfo {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #13c2c2;
+}
+
+.legendText {
+  color: #6c757d;
+  margin-left: 10px;
+}
+
+/* 知识提取 */
+.extractionPanel {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.uploadArea {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.uploadArea:hover {
+  border-color: #3498db;
+  background: rgba(52, 152, 219, 0.05);
+}
+
+.uploadIcon {
+  font-size: 3rem;
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+.extractionTask {
+  margin-bottom: 15px;
+}
+
+.taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* 表单操作 */
+.formActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.legendGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legendColor {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(0);
+  }
+
+  .mainContent {
+    margin-left: 0;
+  }
+
+  .contentArea {
+    padding: 15px;
+  }
+
+  .fileGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .sidebarToggle {
+    display: block;
+  }
+
+  .searchBox {
+    width: auto;
+    flex: 1;
+    margin: 0 15px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .knowledgeGraph {
+    height: auto;
+  }
+
+  .graphCanvas {
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fileGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fileToolbar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .viewToggle {
+    align-self: flex-end;
+  }
+}

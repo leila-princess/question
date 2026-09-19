@@ -1,0 +1,2 @@
+# ZNWD 会话记忆（memory_store）所需；与 backend/requirements.txt 中 redis 版本一致
+redis==3.5.3

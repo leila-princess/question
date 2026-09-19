@@ -1,0 +1,7 @@
+{
+  "_comment": "RTX 5090 16GB: MINERU_BACKEND=hybrid-auto-engine + mineru-api 常驻",
+  "models-dir": {
+    "pipeline": "F:/antd-demo1/models/mineru/pipeline",
+    "vlm": "F:/antd-demo1/models/mineru/vlm"
+  }
+}

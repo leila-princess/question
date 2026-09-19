@@ -1,0 +1,204 @@
+:root {
+  --primary-color: #235cff;
+  --secondary-color: #4f8cff;
+  --accent-color: #ff4d4f;
+  --success-color: #52c41a;
+  --warning-color: #faad14;
+  --light-bg: #f5f7fa;
+  --sidebar-width: 260px;
+}
+
+/* 头 + 主区占满一屏，避免整页再叠一层纵向滚动；主内容区在 layout 的 main 内自行 overflow */
+html {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--light-bg);
+  overflow-x: hidden;
+}
+
+/* 卡片样式 */
+.card-custom {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* 快速操作按钮 */
+.quick-action {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-action:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 活动项 */
+.activity-item {
+  padding: 15px;
+  border-left: 3px solid var(--secondary-color);
+  background: white;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* 参数组 */
+.param-group {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+@keyframes jyllm-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+.jyllm-caret-blink {
+  animation: jyllm-blink 1s step-end infinite;
+}
+
+/* JYLLM 方案流式 Markdown 预览：标题与正文块间距 */
+.jyllm-md-preview h1,
+.jyllm-md-preview h2,
+.jyllm-md-preview h3 {
+  margin-top: 1.1em;
+  margin-bottom: 0.35em;
+  clear: both;
+}
+.jyllm-md-preview h4,
+.jyllm-md-preview h5,
+.jyllm-md-preview h6 {
+  clear: both;
+}
+.jyllm-md-preview p {
+  margin: 0.5em 0;
+}
+.jyllm-md-preview table {
+  margin: 12px 0;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #e0e0e0;
+}
+.jyllm-md-preview th,
+.jyllm-md-preview td {
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  vertical-align: top;
+}
+.jyllm-md-preview th {
+  text-align: left;
+  font-weight: 600;
+  background-color: #f8f8f8;
+}
+.jyllm-md-preview img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 12px 0;
+}
+.jyllm-scheme-editable {
+  overflow-x: auto;
+}
+
+/* Word 本地预览：多页纵向滚动（docx-preview / react-doc-viewer 插件） */
+.wjgl-docx-scroll,
+#wjgl-docx-local-renderer,
+#react-doc-viewer {
+  min-height: 0;
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+#react-doc-viewer #proxy-renderer,
+#react-doc-viewer [id$="-renderer"] {
+  flex: 1;
+  min-height: 0;
+  height: auto !important;
+  overflow: hidden;
+}
+
+.wjgl-local-docx-host .docx-wrapper,
+.wjgl-local-docx-host section.docx {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin: 0 auto 16px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.wjgl-mammoth-fallback {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* pi-view-port / OnlyOffice Word 原格式预览 */
+.pi-viewport-office-root,
+.pi-viewport-office-root > *,
+.onlyoffice-container {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* 阅读页右侧问答区置于 OnlyOffice 可能溢出的层之上 */
+.standards-chat-panel {
+  position: relative;
+  z-index: 30;
+}

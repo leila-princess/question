@@ -1,0 +1,167 @@
+# 检索模板 → ZNWD4 UserBiz / scenario（执行层复用 ZNWD4，本体在此配置）
+templates:
+  equip_to_projects:
+    user_biz: UBIZ_TEST_PROJECT
+    scenario: by_equipment
+    answer_strategy: db_direct
+    focus_types: [Equipment]
+
+  equip_to_indicators:
+    user_biz: UBIZ_INDICATOR
+    scenario: by_equipment
+    answer_strategy: db_direct
+    focus_types: [Equipment]
+
+  env_to_projects:
+    user_biz: UBIZ_TEST_PROJECT
+    scenario: by_environment
+    answer_strategy: db_direct
+    focus_types: [Environment]
+
+  project_to_methods:
+    user_biz: UBIZ_TEST_METHOD
+    scenario: by_project
+    answer_strategy: db_direct
+    focus_types: [TestProject]
+
+  indicator_to_methods:
+    user_biz: UBIZ_TEST_METHOD
+    scenario: by_indicator
+    answer_strategy: db_direct
+    focus_types: [Indicator]
+
+  enum_by_focus_type:
+    user_biz: UBIZ_TEST_PROJECT
+    scenario: enum
+    answer_strategy: db_direct
+    focus_types: []
+
+  enum_environment:
+    user_biz: UBIZ_ENVIRONMENT
+    scenario: list
+    answer_strategy: db_direct
+    focus_types: []
+
+  enum_indicator:
+    user_biz: UBIZ_INDICATOR
+    scenario: list_all
+    answer_strategy: db_direct
+    focus_types: []
+
+  enum_equipment:
+    user_biz: UBIZ_EQUIPMENT
+    scenario: list
+    answer_strategy: db_direct
+    focus_types: []
+
+  enum_equipment_type:
+    user_biz: UBIZ_EQUIPMENT_TYPE
+    scenario: level1_list
+    answer_strategy: db_direct
+    focus_types: []
+
+  document_lookup:
+    user_biz: UBIZ_KNOWLEDGE
+    scenario: keyword_doc
+    answer_strategy: db_direct_doc
+    focus_types: [File]
+    doc_mode: true
+
+  standard_chapter:
+    user_biz: UBIZ_STANDARD
+    scenario: chapter_content
+    answer_strategy: db_direct_doc
+    focus_types: [File]
+    doc_mode: true
+
+  standard_for_projects:
+    user_biz: UBIZ_STANDARD
+    scenario: for_projects
+    answer_strategy: db_direct
+    focus_types: [TestProject]
+
+  method_by_project_or_indicator:
+    user_biz: UBIZ_TEST_METHOD
+    scenario: by_project
+    answer_strategy: db_synthesize
+    focus_types: [TestProject, Indicator]
+    doc_mode: true
+
+  equip_type_to_indicators:
+    user_biz: UBIZ_INDICATOR
+    scenario: by_equip_type
+    answer_strategy: db_direct
+    focus_types: [EquipmentType]
+
+  project_by_method:
+    user_biz: UBIZ_TEST_PROJECT
+    scenario: by_method
+    answer_strategy: db_direct
+    focus_types: [TestMethod]
+
+  equip_and_env_to_projects:
+    user_biz: UBIZ_TEST_PROJECT
+    scenario: by_equip_and_env
+    answer_strategy: db_direct
+    focus_types: [Equipment, Environment]
+
+  environment_properties:
+    user_biz: UBIZ_ENVIRONMENT
+    scenario: properties
+    answer_strategy: db_synthesize
+    focus_types: [Environment]
+
+  equipment_under_type:
+    user_biz: UBIZ_EQUIPMENT
+    scenario: under_type
+    answer_strategy: db_direct
+    focus_types: [EquipmentType]
+
+  equipment_by_project:
+    user_biz: UBIZ_EQUIPMENT
+    scenario: by_project
+    answer_strategy: db_direct
+    focus_types: [TestProject]
+
+  equipment_by_indicator:
+    user_biz: UBIZ_EQUIPMENT
+    scenario: by_indicator
+    answer_strategy: db_direct
+    focus_types: [Indicator]
+
+  chitchat:
+    user_biz: ""
+    scenario: ""
+    answer_strategy: direct_llm
+    focus_types: []
+
+  composite_project_and_indicator:
+    user_biz: COMP_INTENT_PLAN
+    scenario: default
+    answer_strategy: db_direct
+    focus_types: [Equipment]
+    composite_kind: intent_plan
+
+  composite_project_then_method:
+    user_biz: COMP_PROJECT_THEN_METHOD
+    scenario: default
+    answer_strategy: db_direct
+    focus_types: [Equipment]
+
+  composite_indicator_then_method:
+    user_biz: COMP_INDICATOR_THEN_METHOD
+    scenario: default
+    answer_strategy: db_direct
+    focus_types: [Equipment]
+
+  composite_project_env_method:
+    user_biz: COMP_PROJECT_ENV_METHOD
+    scenario: default
+    answer_strategy: db_direct
+    focus_types: [Equipment, Environment]
+
+  composite_env_settings:
+    user_biz: COMP_EQUIP_PROJECT_ENV_SETTINGS
+    scenario: default
+    answer_strategy: db_synthesize
+    focus_types: [Equipment, TestProject]

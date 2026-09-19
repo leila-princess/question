@@ -1,0 +1,3 @@
+# 纯 LLM 额外依赖
+networkx>=3.0
+pyperplan>=1.3.0

@@ -1,0 +1,28 @@
+{
+  "neo4j_stats": {
+    "EquipmentType": 7,
+    "Equipment": 17,
+    "Environment": 11,
+    "TestProject": 62,
+    "Indicator": 38,
+    "TestMethod": 16,
+    "File": 36,
+    "relations": 479
+  },
+  "chroma_total": 173,
+  "chroma_docs": [
+    "fgbz0001",
+    "fgbz0002",
+    "fgbz0003",
+    "fgbz0004",
+    "gzfwj0001",
+    "jyllm_1776234158555",
+    "jyllm_1777279928806",
+    "jyllm_1778643202382",
+    "jyllm_1778722642821",
+    "jyllm_1778729733318",
+    "jyllm_1778829587909",
+    "jyllm_1778986704128",
+    "wtgl0001"
+  ]
+}

@@ -1,0 +1,155 @@
+/* Charts.css */
+.chart-container {
+  width: 100%;
+  position: relative;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+/* 柱状图样式 */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 70%;
+  padding: 0 20px;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  margin: 0 5px;
+}
+
+.x-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.bar-container {
+  width: 100%;
+  height: calc(100% - 30px);
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.bar {
+  width: 80%;
+  margin: 0 auto;
+  transition: height 0.3s ease;
+  border-radius: 4px 4px 0 0;
+}
+
+.bar-segment {
+  transition: height 0.3s ease;
+  border-radius: 4px 4px 0 0;
+}
+
+.bar:hover,
+.bar-segment:hover {
+  opacity: 0.8;
+}
+
+/* 图例样式 */
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.legend-label {
+  font-size: 12px;
+  color: #666;
+}
+
+/* 饼图和环状图样式 */
+.pie-chart-container,
+.doughnut-chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.pie-legend,
+.doughnut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pie-legend-item,
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-value {
+  font-size: 11px;
+  color: #999;
+}
+
+.pie-slice:hover,
+.doughnut-slice:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* 网格线样式 */
+.grid-lines line {
+  stroke-dasharray: 3, 3;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .pie-chart-container,
+  .doughnut-chart-container {
+    flex-direction: column;
+  }
+  
+  .pie-legend,
+  .doughnut-legend {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

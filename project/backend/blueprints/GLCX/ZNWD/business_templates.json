@@ -1,0 +1,407 @@
+{
+  "version": "1.1",
+  "description": "ZNWD 业务模板配置 - 可在此文件中新增/修改业务模板，无需修改代码",
+  "templates": [
+    {
+      "template_code": "BIZ_ENUM",
+      "template_name": "节点枚举",
+      "description": "列举某类节点（设备类型/环境/项目/指标/方法等）",
+      "intent_type": "ENUMERATION",
+      "answer_mode": "database_direct",
+      "question_patterns": [
+        ".*设备类型.*有哪些.*",
+        ".*环境.*有哪些.*",
+        ".*列出.*设备.*",
+        ".*显示.*所有.*"
+      ],
+      "slots": {
+        "node_type": {
+          "type": "enum",
+          "values": ["EquipmentType", "Environment", "TestProject", "Indicator", "TestMethod", "File"],
+          "description": "要枚举的节点类型"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "neo_list_nodes",
+          "params": {
+            "node_type": "${node_type}",
+            "limit": 300,
+            "status_filter": 1
+          },
+          "purpose": "列举系统中所有 ${node_type} 节点",
+          "display_text": "正在查找系统中所有的${node_type_zh}..."
+        }
+      ],
+      "display_template": {
+        "planning": "【检索规划】\n1. 结合对话历史对用户意图的理解：${intent_summary}\n2. 拟在系统中了解的内容：${what_to_retrieve}\n3. 检索顺序：${retrieve_order}\n4. 以下开始按规划执行程序化检索。",
+        "step_prefix": "正在执行第${step_num}步："
+      }
+    },
+    {
+      "template_code": "BIZ_REL_ONE_HOP",
+      "template_name": "单跳关系查询",
+      "description": "查询 A 关联的 B（如设备→项目、环境→项目、设备→指标）",
+      "intent_type": "RELATION_QUERY",
+      "answer_mode": "database_direct",
+      "question_patterns": [
+        ".*{focus}.*有哪些.*项目.*",
+        ".*{focus}.*有什么.*指标.*",
+        ".*{focus}.*关联.*"
+      ],
+      "slots": {
+        "from_type": {
+          "type": "enum",
+          "values": ["Equipment", "Environment", "TestProject", "Indicator"],
+          "description": "起点节点类型"
+        },
+        "to_type": {
+          "type": "enum",
+          "values": ["TestProject", "Indicator", "TestMethod"],
+          "description": "终点节点类型"
+        },
+        "rel_type": {
+          "type": "enum",
+          "values": ["CON", "HAS"],
+          "default": "CON",
+          "description": "关系类型"
+        },
+        "focus": {
+          "type": "string",
+          "description": "用户问题中的焦点实体（关键词）"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "neo_relation_query",
+          "params": {
+            "from_type": "${from_type}",
+            "rel_type": "${rel_type}",
+            "to_type": "${to_type}",
+            "from_field": "Name",
+            "match_mode": "fuzzy",
+            "limit": 120,
+            "where_side": "from",
+            "value": "${focus}"
+          },
+          "purpose": "根据「${focus}」查找 ${from_type} 关联的 ${to_type}",
+          "display_text": "正在根据「${focus}」查找${from_type_zh}关联的${to_type_zh}..."
+        }
+      ],
+      "display_template": {
+        "planning": "【检索规划】\n1. 结合对话历史对用户意图的理解：${intent_summary}\n2. 拟在图谱中了解的内容：根据「${focus}」查找${from_type_zh}关联的${to_type_zh}\n3. 检索顺序：第1步：根据「${focus}」查找${from_type_zh}关联的${to_type_zh}\n4. 以下开始按规划执行程序化检索。",
+        "step_prefix": "正在执行检索："
+      }
+    },
+    {
+      "template_code": "BIZ_REL_TWO_HOP",
+      "template_name": "两跳关系查询",
+      "description": "查询 A→B→C 的两跳关系（如环境→项目→方法、设备→项目→方法）",
+      "intent_type": "RELATION_QUERY",
+      "answer_mode": "database_direct",
+      "question_patterns": [
+        ".*{focus}.*的方法.*是什么.*",
+        ".*{focus}.*有什么.*测试方法.*",
+        ".*{focus}.*关联.*项目.*方法.*"
+      ],
+      "slots": {
+        "from_type": {
+          "type": "enum",
+          "values": ["Equipment", "Environment"],
+          "description": "起点节点类型"
+        },
+        "mid_type": {
+          "type": "enum",
+          "values": ["TestProject"],
+          "default": "TestProject",
+          "description": "中间节点类型"
+        },
+        "to_type": {
+          "type": "enum",
+          "values": ["TestMethod"],
+          "default": "TestMethod",
+          "description": "终点节点类型"
+        },
+        "focus": {
+          "type": "string",
+          "description": "用户问题中的焦点实体（关键词）"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "neo_relation_query",
+          "params": {
+            "from_type": "${from_type}",
+            "rel_type": "CON",
+            "to_type": "${mid_type}",
+            "from_field": "Name",
+            "match_mode": "fuzzy",
+            "limit": 120,
+            "where_side": "from",
+            "value": "${focus}"
+          },
+          "purpose": "首先根据「${focus}」定位 ${from_type} 关联的 ${mid_type}",
+          "display_text": "正在根据「${focus}」查找${from_type_zh}关联的${mid_type_zh}..."
+        },
+        {
+          "step_id": "s2",
+          "op_code": "neo_relation_query",
+          "params": {
+            "from_type": "${mid_type}",
+            "rel_type": "CON",
+            "to_type": "${to_type}",
+            "from_field": "Id",
+            "match_mode": "in",
+            "limit": 200,
+            "from_values_ref": {
+              "step_id": "s1",
+              "target": "m",
+              "field": "Id"
+            }
+          },
+          "purpose": "然后查找这些 ${mid_type} 关联的 ${to_type}",
+          "display_text": "正在查找这些${mid_type_zh}关联的${to_type_zh}..."
+        }
+      ],
+      "display_template": {
+        "planning": "【检索规划】\n1. 结合对话历史对用户意图的理解：${intent_summary}\n2. 拟在图谱中了解的内容：首先根据「${focus}」查找${from_type_zh}关联的${mid_type_zh}，然后查找这些${mid_type_zh}关联的${to_type_zh}\n3. 检索顺序：第1步：根据「${focus}」查找${from_type_zh}关联的${mid_type_zh} → 第2步：查找这些${mid_type_zh}关联的${to_type_zh}\n4. 以下开始按规划执行程序化检索。",
+        "step_prefix": "正在执行第${step_num}步检索："
+      }
+    },
+    {
+      "template_code": "BIZ_PROJECT_TO_METHOD",
+      "template_name": "项目→方法查询",
+      "description": "按测试项目名称查询关联的测试方法",
+      "intent_type": "RELATION_QUERY",
+      "answer_mode": "llm_synthesize",
+      "question_patterns": [
+        ".*{focus}.*测试项目.*方法.*",
+        ".*{focus}.*试验项目.*方法.*"
+      ],
+      "slots": {
+        "focus": {
+          "type": "string",
+          "description": "测试项目名称关键词"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "neo_node_query",
+          "params": {
+            "node_type": "TestProject",
+            "field": "Name",
+            "value": "${focus}",
+            "limit": 80
+          },
+          "purpose": "定位测试项目「${focus}」"
+        },
+        {
+          "step_id": "s2",
+          "op_code": "neo_relation_query",
+          "params": {
+            "from_type": "TestProject",
+            "rel_type": "CON",
+            "to_type": "TestMethod",
+            "from_field": "Id",
+            "match_mode": "in",
+            "limit": 200,
+            "from_values_ref": {
+              "step_id": "s1",
+              "target": "n",
+              "field": "Id"
+            }
+          },
+          "purpose": "查找「${focus}」对应的测试方法"
+        }
+      ]
+    },
+    {
+      "template_code": "BIZ_INDICATOR_TO_METHOD",
+      "template_name": "指标→方法查询",
+      "description": "按考核指标名称查询关联的测试方法",
+      "intent_type": "RELATION_QUERY",
+      "answer_mode": "llm_synthesize",
+      "question_patterns": [
+        ".*{focus}.*指标.*方法.*",
+        ".*{focus}.*考核指标.*测试方法.*",
+        ".*{focus}.*的指标.*有什么方法.*"
+      ],
+      "slots": {
+        "focus": {
+          "type": "string",
+          "description": "考核指标名称关键词"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "neo_node_query",
+          "params": {
+            "node_type": "Indicator",
+            "field": "Name",
+            "value": "${focus}",
+            "limit": 80
+          },
+          "purpose": "定位考核指标「${focus}」",
+          "display_text": "正在定位考核指标「${focus}」..."
+        },
+        {
+          "step_id": "s2",
+          "op_code": "neo_relation_query",
+          "params": {
+            "from_type": "Indicator",
+            "rel_type": "CON",
+            "to_type": "TestMethod",
+            "from_field": "Id",
+            "match_mode": "in",
+            "limit": 200,
+            "from_values_ref": {
+              "step_id": "s1",
+              "target": "n",
+              "field": "Id"
+            }
+          },
+          "purpose": "查找「${focus}」指标对应的测试方法",
+          "display_text": "正在查找「${focus}」指标对应的测试方法..."
+        }
+      ],
+      "display_template": {
+        "planning": "【检索规划】\n1. 结合对话历史对用户意图的理解：查询指标「${focus}」关联的测试方法\n2. 拟在图谱中了解的内容：首先定位考核指标「${focus}」，然后查找该指标对应的测试方法\n3. 检索顺序：第1步：定位考核指标 → 第2步：查找关联的测试方法\n4. 以下开始按规划执行程序化检索。",
+        "step_prefix": "正在执行第${step_num}步检索："
+      }
+    },
+    {
+      "template_code": "BIZ_METHOD_BY_RATE",
+      "template_name": "按关联度排序查询方法",
+      "description": "查询与项目/指标关联度最高的测试方法（按 rate 属性排序）",
+      "intent_type": "RELATION_QUERY",
+      "answer_mode": "llm_synthesize",
+      "question_patterns": [
+        ".*{focus}.*关联度.*最高.*方法.*",
+        ".*{focus}.*rate.*方法.*",
+        ".*{focus}.*最相关.*方法.*",
+        ".*{focus}.*方法.*关联度.*排序.*",
+        ".*{focus}.*什么方法.*最匹配.*"
+      ],
+      "slots": {
+        "focus": {
+          "type": "string",
+          "description": "项目或指标名称关键词"
+        },
+        "from_type": {
+          "type": "enum",
+          "values": ["TestProject", "Indicator"],
+          "default": "TestProject",
+          "description": "起点节点类型（项目或指标）"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "neo_node_query",
+          "params": {
+            "node_type": "${from_type}",
+            "field": "Name",
+            "value": "${focus}",
+            "limit": 80
+          },
+          "purpose": "定位「${focus}」对应的 ${from_type}"
+        },
+        {
+          "step_id": "s2",
+          "op_code": "neo_relation_query",
+          "params": {
+            "from_type": "${from_type}",
+            "rel_type": "CON",
+            "to_type": "TestMethod",
+            "from_field": "Id",
+            "match_mode": "in",
+            "limit": 200,
+            "from_values_ref": {
+              "step_id": "s1",
+              "target": "n",
+              "field": "Id"
+            }
+          },
+          "purpose": "查找「${focus}」关联的所有测试方法及关联度"
+        }
+      ]
+    },
+    {
+      "template_code": "BIZ_EQUIP_DISCOVERY",
+      "template_name": "按项目发现设备",
+      "description": "查询关联某测试项目的设备",
+      "intent_type": "RELATION_QUERY",
+      "answer_mode": "database_direct",
+      "question_patterns": [
+        ".*哪些.*设备.*{focus}.*",
+        ".*什么.*装备.*{focus}.*"
+      ],
+      "slots": {
+        "project_filter": {
+          "type": "string",
+          "description": "项目名称关键词"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "neo_relation_query",
+          "params": {
+            "from_type": "Equipment",
+            "rel_type": "CON",
+            "to_type": "TestProject",
+            "from_field": "Name",
+            "match_mode": "fuzzy",
+            "limit": 120,
+            "where_side": "to",
+            "value": "${project_filter}"
+          },
+          "purpose": "根据「${project_filter}」筛选关联的设备"
+        }
+      ]
+    },
+    {
+      "template_code": "BIZ_DOCUMENT",
+      "template_name": "文档检索",
+      "description": "标准/章节文档检索",
+      "intent_type": "STANDARD_CHAPTER",
+      "answer_mode": "database_direct",
+      "question_patterns": [
+        ".*标准.*试验过程.*",
+        ".*GB/T.*章节.*",
+        ".*GJB.*第.*章.*"
+      ],
+      "slots": {
+        "section_prefix": {
+          "type": "string",
+          "description": "章节前缀（如 1.1）"
+        }
+      },
+      "steps": [
+        {
+          "step_id": "s1",
+          "op_code": "chroma_vector_search",
+          "params": {
+            "query": "${retrieval_question}",
+            "top_k": 12
+          },
+          "purpose": "在文档库中检索相关片段"
+        },
+        {
+          "step_id": "s2",
+          "op_code": "chroma_rerank",
+          "params": {
+            "query": "${retrieval_question}",
+            "top_k": 12
+          },
+          "purpose": "对检索结果按相关性排序"
+        }
+      ]
+    }
+  ]
+}

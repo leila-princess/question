@@ -1,0 +1,12 @@
+# 在 conda/venv「paddle_env」中安装（与 paddlepaddle-gpu 二选一，勿混装）
+# 先装本文件，再装 CPU 版 Paddle：
+#   pip install paddlepaddle==2.6.2 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+protobuf==3.20.3
+paddleocr==2.7.3
+numpy<2.0
+opencv-python-headless
+PyMuPDF
+pillow
+idna>=3.4
+certifi>=2023.5.7
+tqdm>=4.66

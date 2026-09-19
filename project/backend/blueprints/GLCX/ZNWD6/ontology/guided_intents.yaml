@@ -1,0 +1,447 @@
+# 引导式问答：目标节点 → 条件槽 → 问法模板
+node_labels_zh:
+  EquipmentType: 装备类型
+  Equipment: 装备
+  Environment: 试验环境
+  TestProject: 试验项目
+  Indicator: 考核指标
+  TestMethod: 试验方法
+  File: 标准/文档
+
+intents:
+  - id: goal_equipment_type
+    goal_type: EquipmentType
+    label: 查装备类型
+    template_id: enum_equipment_type
+    slots: []
+    question_templates:
+      - "有哪些装备类型"
+
+  - id: goal_equipment
+    goal_type: Equipment
+    label: 查装备清单
+    template_id: enum_equipment
+    slots: []
+    question_templates:
+      - "有哪些装备"
+      - "登记了哪些装备"
+
+  - id: goal_equipment_projects
+    goal_type: TestProject
+    label: 查装备的试验项目
+    template_id: equip_to_projects
+    slots:
+      - slot_key: equipment_keywords
+        node_type: Equipment
+        label: 装备
+        required: true
+    question_templates:
+      - "{equipment}有哪些试验项目"
+      - "查询{equipment}关联的试验项目"
+      - "{equipment}涉及哪些试验项目"
+      - "哪些试验项目与{equipment}相关"
+
+  - id: goal_environment
+    goal_type: Environment
+    label: 查试验环境
+    template_id: enum_environment
+    slots: []
+    question_templates:
+      - "有哪些试验环境"
+
+  - id: goal_env_projects
+    goal_type: TestProject
+    label: 查环境下的试验项目
+    template_id: env_to_projects
+    slots:
+      - slot_key: environment_keywords
+        node_type: Environment
+        label: 试验环境
+        required: true
+    question_templates:
+      - "{environment}环境下有哪些试验项目"
+      - "查询{environment}环境关联的试验项目"
+      - "{environment}条件下开展哪些试验项目"
+      - "哪些试验项目适用于{environment}环境"
+
+  - id: goal_env_properties
+    goal_type: Environment
+    label: 查环境属性与分类
+    template_id: environment_properties
+    slots:
+      - slot_key: environment_keywords
+        node_type: Environment
+        label: 试验环境
+        required: true
+    question_templates:
+      - "{environment}的分类和属性有哪些"
+      - "查询{environment}的环境属性"
+      - "{environment}属于哪类环境"
+      - "{environment}的环境分级是什么"
+
+  - id: goal_indicators
+    goal_type: Indicator
+    label: 查装备考核指标
+    template_id: equip_to_indicators
+    slots:
+      - slot_key: equipment_keywords
+        node_type: Equipment
+        label: 装备
+        required: true
+    question_templates:
+      - "{equipment}有哪些考核指标"
+      - "查询{equipment}的考核指标"
+      - "{equipment}需要考核哪些指标"
+      - "哪些考核指标适用于{equipment}"
+
+  - id: goal_project_methods
+    goal_type: TestMethod
+    label: 查项目的试验方法
+    template_id: project_to_methods
+    slots:
+      - slot_key: project_keywords
+        node_type: TestProject
+        label: 试验项目
+        required: true
+    question_templates:
+      - "{project}的试验方法是什么"
+      - "{project}有哪些试验方法"
+      - "查询{project}对应的试验方法"
+      - "哪些试验方法适用于{project}"
+      - "{project}采用哪些试验方法"
+      - "执行{project}应依据哪些试验方法"
+
+  - id: goal_indicator_methods
+    goal_type: TestMethod
+    label: 查指标的试验方法
+    template_id: indicator_to_methods
+    slots:
+      - slot_key: indicator_keywords
+        node_type: Indicator
+        label: 考核指标
+        required: true
+    question_templates:
+      - "{indicator}的试验方法是什么"
+      - "{indicator}有哪些试验方法"
+      - "查询{indicator}对应的试验方法"
+      - "哪些试验方法适用于{indicator}"
+      - "考核{indicator}应依据哪些试验方法"
+
+  - id: goal_document
+    goal_type: File
+    label: 查标准/文档
+    template_id: document_lookup
+    slots:
+      - slot_key: standard_keywords
+        node_type: File
+        label: 标准关键词
+        required: true
+        free_text: true
+    question_templates:
+      - "{standard}的主要内容是什么"
+
+  - id: goal_chapter
+    goal_type: File
+    label: 查标准章节
+    template_id: standard_chapter
+    slots:
+      - slot_key: standard_keywords
+        node_type: File
+        label: 标准号/名称
+        required: true
+        free_text: true
+      - slot_key: section
+        node_type: File
+        label: 章节号
+        required: true
+        free_text: true
+    question_templates:
+      - "{standard}第{section}节讲了什么"
+
+  - id: goal_enum_indicator
+    goal_type: Indicator
+    label: 有哪些考核指标
+    template_id: enum_indicator
+    slots: []
+    question_templates:
+      - "有哪些考核指标"
+
+  - id: goal_equip_type_indicators
+    goal_type: Indicator
+    label: 装备类型下的考核指标
+    template_id: equip_type_to_indicators
+    slots:
+      - slot_key: equipment_type_keywords
+        node_type: EquipmentType
+        label: 装备类型
+        required: true
+    question_templates:
+      - "{equipment_type}有哪些考核指标"
+
+  - id: goal_equipment_under_type
+    goal_type: Equipment
+    label: 某类型下的装备
+    template_id: equipment_under_type
+    slots:
+      - slot_key: equipment_type_keywords
+        node_type: EquipmentType
+        label: 装备类型
+        required: true
+    question_templates:
+      - "{equipment_type}下有哪些装备"
+
+  - id: goal_equipment_by_project
+    goal_type: Equipment
+    label: 项目涉及的装备
+    template_id: equipment_by_project
+    slots:
+      - slot_key: project_keywords
+        node_type: TestProject
+        label: 试验项目
+        required: true
+    question_templates:
+      - "{project}涉及哪些装备"
+      - "查询{project}关联的装备"
+      - "哪些装备参与{project}"
+      - "{project}对应哪些被试装备"
+
+  - id: goal_equipment_by_indicator
+    goal_type: Equipment
+    label: 指标涉及的装备
+    template_id: equipment_by_indicator
+    slots:
+      - slot_key: indicator_keywords
+        node_type: Indicator
+        label: 考核指标
+        required: true
+    question_templates:
+      - "{indicator}涉及哪些装备"
+
+  - id: goal_project_by_method
+    goal_type: TestProject
+    label: 方法对应的试验项目
+    template_id: project_by_method
+    slots:
+      - slot_key: method_keywords
+        node_type: TestMethod
+        label: 试验方法
+        required: true
+    question_templates:
+      - "{method}对应哪些试验项目"
+      - "查询{method}关联的试验项目"
+      - "哪些试验项目采用{method}"
+      - "{method}适用于哪些试验项目"
+
+  - id: goal_standard_for_projects
+    goal_type: File
+    label: 项目相关标准/文档
+    template_id: standard_for_projects
+    slots:
+      - slot_key: project_keywords
+        node_type: TestProject
+        label: 试验项目
+        required: true
+    question_templates:
+      - "{project}相关的标准有哪些"
+      - "查询{project}依据的标准"
+      - "{project}引用哪些标准文件"
+      - "哪些标准适用于{project}"
+
+composites:
+  - id: composite_project_then_method
+    label: 装备 → 项目 → 方法
+    template_id: composite_project_then_method
+    slots:
+      - slot_key: equipment_keywords
+        node_type: Equipment
+        label: 装备
+        required: true
+    question_templates:
+      - "查询{equipment}的试验项目及对应试验方法"
+
+  - id: composite_project_and_indicator
+    label: 装备 → 项目与指标
+    template_id: composite_project_and_indicator
+    slots:
+      - slot_key: equipment_keywords
+        node_type: Equipment
+        label: 装备
+        required: true
+    question_templates:
+      - "查询{equipment}的试验项目和考核指标"
+
+  - id: composite_equip_env_projects
+    label: 装备 + 环境 → 项目
+    template_id: equip_and_env_to_projects
+    slots:
+      - slot_key: equipment_keywords
+        node_type: Equipment
+        label: 装备
+        required: true
+      - slot_key: environment_keywords
+        node_type: Environment
+        label: 试验环境
+        required: true
+    question_templates:
+      - "{equipment}在{environment}环境下有哪些试验项目"
+
+  - id: composite_indicator_then_method
+    label: 装备 → 指标 → 方法
+    template_id: composite_indicator_then_method
+    slots:
+      - slot_key: equipment_keywords
+        node_type: Equipment
+        label: 装备
+        required: true
+    question_templates:
+      - "查询{equipment}的考核指标及对应试验方法"
+
+  - id: composite_project_env_method
+    label: 装备 + 环境 → 项目 → 方法
+    template_id: composite_project_env_method
+    slots:
+      - slot_key: equipment_keywords
+        node_type: Equipment
+        label: 装备
+        required: true
+      - slot_key: environment_keywords
+        node_type: Environment
+        label: 试验环境
+        required: true
+    question_templates:
+      - "查询{equipment}在{environment}环境下的试验项目及试验方法"
+
+quick_examples:
+  - "有哪些设备类型？"
+  - "无人机有什么试验项目？"
+  - "坦克有什么考核指标？"
+  - "复杂电磁环境分类有哪些？"
+
+guided_flow:
+  greeting_zh: "您好！我可以帮您查清单、关联和文档知识。"
+  greeting_en: "Hi! I can help you explore inventory, relations, and documents."
+  node_types:
+    - type: EquipmentType
+      label_zh: 装备类型
+      label_en: Equipment type
+      aspects:
+        - id: enum_list
+          label_zh: 有哪些装备类型
+          label_en: List equipment types
+          aspect_kind: enum
+          intent_id: goal_equipment_type
+
+    - type: Equipment
+      label_zh: 装备
+      label_en: Equipment
+      aspects:
+        - id: enum_list
+          label_zh: 有哪些装备
+          label_en: List equipment
+          aspect_kind: enum
+          intent_id: goal_equipment
+        - id: rel_projects
+          label_zh: 关联的试验项目
+          label_en: Related test projects
+          aspect_kind: relation
+          intent_id: goal_equipment_projects
+        - id: rel_indicators
+          label_zh: 关联的考核指标
+          label_en: Related indicators
+          aspect_kind: relation
+          intent_id: goal_indicators
+        - id: composite_project_method
+          label_zh: 试验项目及对应方法
+          label_en: Projects and methods
+          aspect_kind: composite
+          intent_id: composite_project_then_method
+        - id: composite_project_indicator
+          label_zh: 试验项目与考核指标
+          label_en: Projects and indicators
+          aspect_kind: composite
+          intent_id: composite_project_and_indicator
+        - id: composite_env_projects
+          label_zh: 指定环境下的试验项目
+          label_en: Projects in environment
+          aspect_kind: composite
+          intent_id: composite_equip_env_projects
+
+    - type: Environment
+      label_zh: 试验环境
+      label_en: Environment
+      aspects:
+        - id: enum_list
+          label_zh: 有哪些试验环境
+          label_en: List environments
+          aspect_kind: enum
+          intent_id: goal_environment
+        - id: rel_projects
+          label_zh: 环境下的试验项目
+          label_en: Test projects in environment
+          aspect_kind: relation
+          intent_id: goal_env_projects
+        - id: properties
+          label_zh: 环境分类与属性
+          label_en: Environment properties
+          aspect_kind: properties
+          intent_id: goal_env_properties
+
+    - type: TestProject
+      label_zh: 试验项目
+      label_en: Test project
+      aspects:
+        - id: rel_methods
+          label_zh: 项目的试验方法
+          label_en: Test methods for project
+          aspect_kind: relation
+          intent_id: goal_project_methods
+        - id: rel_equipment
+          label_zh: 项目涉及的装备
+          label_en: Equipment for project
+          aspect_kind: relation
+          intent_id: goal_equipment_by_project
+        - id: rel_standards
+          label_zh: 项目相关标准
+          label_en: Standards for project
+          aspect_kind: relation
+          intent_id: goal_standard_for_projects
+
+    - type: Indicator
+      label_zh: 考核指标
+      label_en: Indicator
+      aspects:
+        - id: rel_methods
+          label_zh: 指标的试验方法
+          label_en: Test methods for indicator
+          aspect_kind: relation
+          intent_id: goal_indicator_methods
+
+    - type: TestMethod
+      label_zh: 试验方法
+      label_en: Test method
+      aspects:
+        - id: via_project
+          label_zh: 通过试验项目查询
+          label_en: Query via test project
+          aspect_kind: relation
+          intent_id: goal_project_methods
+        - id: via_indicator
+          label_zh: 通过考核指标查询
+          label_en: Query via indicator
+          aspect_kind: relation
+          intent_id: goal_indicator_methods
+
+    - type: File
+      label_zh: 标准/文档
+      label_en: Standard / document
+      aspects:
+        - id: document
+          label_zh: 查标准/文档内容
+          label_en: Document lookup
+          aspect_kind: document
+          intent_id: goal_document
+        - id: chapter
+          label_zh: 查标准章节
+          label_en: Standard chapter
+          aspect_kind: document
+          intent_id: goal_chapter

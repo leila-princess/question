@@ -1,0 +1,6 @@
+{
+  "use_gpu": false,
+  "cuda_visible_devices": null,
+  "paddleocr_version": "2.7.3",
+  "paddlepaddle_note": "CPU: paddlepaddle==2.6.2 (cpu index). GPU: paddlepaddle-gpu==2.6.2.post117 + CUDA 11.7 对应 wheel，见 README.md"
+}

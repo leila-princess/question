@@ -1,0 +1,204 @@
+@page {
+  size: A4;
+  /* 页边距由 convert.js 中 Puppeteer pdf_options.margin（2cm）控制；此处不设 margin:0，避免打印时贴边 */
+}
+body {
+  font-family: 'SimSun', '宋体', 'Times New Roman', serif;
+  font-size: 12pt;
+  line-height: 1.45;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+.pdf-content {
+  max-width: 100%;
+  margin: 0 auto;
+}
+h1 {
+  font-family: 'SimHei', '黑体', 'Microsoft YaHei', sans-serif;
+  font-size: 22pt;
+  font-weight: bold;
+  text-align: center;
+  margin: 10mm 0 8mm 0;
+  page-break-before: avoid;
+  page-break-after: avoid;
+}
+h2 {
+  font-family: 'SimHei', '黑体', sans-serif;
+  font-size: 16pt;
+  font-weight: bold;
+  margin-top: 12mm;
+  margin-bottom: 6mm;
+  border-left: 4px solid #1e3a8a;
+  padding-left: 10px;
+}
+h3 {
+  font-family: 'SimHei', '黑体', sans-serif;
+  font-size: 14pt;
+  font-weight: bold;
+  margin-top: 8mm;
+  margin-bottom: 4mm;
+}
+h4 {
+  font-family: 'SimHei', '黑体', sans-serif;
+  font-size: 13pt;
+  font-weight: bold;
+  margin-top: 6mm;
+  margin-bottom: 3mm;
+}
+h5 {
+  font-family: 'SimHei', '黑体', sans-serif;
+  font-size: 12pt;
+  font-weight: 600;
+  margin-top: 5mm;
+  margin-bottom: 2.5mm;
+}
+h6 {
+  font-family: 'SimHei', '黑体', sans-serif;
+  font-size: 11pt;
+  font-weight: 500;
+  color: #333;
+  margin-top: 4mm;
+  margin-bottom: 2mm;
+}
+/* 第一页：标题区 + 底部居中签署栏，整页结束后换页进入正文 */
+.cover-sheet {
+  page-break-after: always;
+  break-after: page;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 255mm;
+  box-sizing: border-box;
+  padding: 6mm 8mm 10mm;
+}
+.cover-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.cover-main .doc-id {
+  font-size: 11pt;
+  font-weight: normal;
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 8mm;
+  color: #333;
+}
+.cover-main .title {
+  font-family: 'SimHei', '黑体', 'Microsoft YaHei', sans-serif;
+  font-size: 22pt;
+  font-weight: bold;
+  line-height: 1.45;
+  margin: 6mm 0;
+  max-width: 95%;
+}
+.cover-main .org-date {
+  margin-top: 6mm;
+  font-size: 11pt;
+  color: #333;
+}
+.signature-footer {
+  flex: 0 0 auto;
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+  padding-top: 4mm;
+}
+.signature-footer-title {
+  font-family: 'SimHei', '黑体', sans-serif;
+  font-size: 11pt;
+  font-weight: bold;
+  margin-bottom: 4mm;
+  color: #1e3a8a;
+}
+.signature-rows {
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+}
+.signature-row {
+  margin: 3.5mm 0;
+  font-size: 11pt;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 3mm;
+  white-space: nowrap;
+}
+.signature-label {
+  font-weight: bold;
+  flex: 0 0 auto;
+}
+.signature-line {
+  display: inline-block;
+  min-width: 52mm;
+  border-bottom: 1px solid #000;
+  height: 1.05em;
+}
+p {
+  margin: 0 0 6px 0;
+  text-indent: 2em;
+}
+ul, ol {
+  margin: 6px 0;
+  padding-left: 2em;
+}
+li {
+  margin: 3px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10mm 0;
+  font-size: 10.5pt;
+}
+th, td {
+  border: 1px solid #000;
+  padding: 6px 8px;
+  text-align: center;
+  vertical-align: top;
+}
+th {
+  font-family: 'SimHei', '黑体', sans-serif;
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+thead tr {
+  background-color: #e6e6e6;
+}
+table p {
+  text-indent: 0;
+  margin: 0;
+}
+img {
+  max-width: 80%;
+  height: auto;
+  display: block;
+  margin: 10mm auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+pre, code {
+  font-family: 'Courier New', monospace;
+  font-size: 10pt;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+pre {
+  padding: 10px;
+  overflow-x: auto;
+  border: 1px solid #ddd;
+}
+tr {
+  page-break-inside: avoid;
+}
+h1, h2, h3, h4, h5, h6 {
+  page-break-after: avoid;
+}

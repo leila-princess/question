@@ -1,0 +1,154 @@
+{
+  "_comment": "知识图谱统一 Schema 定义 — 前后端共用",
+  "_description": "修改此文件即可同步更新前后端。前端通过 /lib/schema.ts 自动解析，后端通过 schema_api.py 提供 API。",
+  "version": "2.0.0",
+  "lastUpdated": "2026-04-02",
+  "nodeTypes": {
+    "EquipmentType": {
+      "label": "设备类型",
+      "description": "二级设备分类，如无人机、坦克等",
+      "properties": {
+        "id": "ID",
+        "name": "名称",
+        "label": "标签",
+        "description": "描述",
+        "type": "分类",
+        "status": "状态",
+        "user_id": "上传用户",
+        "create_time": "上传时间"
+      }
+    },
+    "Equipment": {
+      "label": "设备节点",
+      "description": "具体设备实例",
+      "properties": {
+        "id": "ID",
+        "name": "名称",
+        "label": "标签",
+        "type": "类别",
+        "description": "描述",
+        "status": "状态",
+        "user_id": "上传用户",
+        "create_time": "上传时间"
+      }
+    },
+    "Environment": {
+      "label": "环境节点",
+      "description": "试验环境，如复杂电磁环境、复杂地理环境等",
+      "properties": {
+        "id": "ID",
+        "name": "名称",
+        "label": "标签",
+        "description": "描述",
+        "type": "分类",
+        "class": "分级",
+        "limit": "约束",
+        "request": "要求",
+        "status": "状态",
+        "user_id": "上传用户",
+        "create_time": "上传时间"
+      }
+    },
+    "Project": {
+      "label": "项目节点",
+      "description": "试验项目",
+      "properties": {
+        "id": "ID",
+        "name": "名称",
+        "type": "类别",
+        "label": "标签",
+        "description": "描述",
+        "status": "状态",
+        "user_id": "上传用户",
+        "create_time": "上传时间"
+      }
+    },
+    "Indicator": {
+      "label": "指标节点",
+      "description": "考核指标",
+      "properties": {
+        "id": "ID",
+        "name": "名称",
+        "label": "标签",
+        "description": "描述",
+        "type": "类别",
+        "status": "状态",
+        "user_id": "上传用户",
+        "create_time": "上传时间"
+      }
+    },
+    "Method": {
+      "label": "方法节点",
+      "description": "试验方法",
+      "properties": {
+        "id": "ID",
+        "name": "名称",
+        "type": "类别",
+        "label": "标签",
+        "description": "描述",
+        "source": "来源",
+        "status": "状态",
+        "user_id": "上传用户",
+        "create_time": "上传时间"
+      }
+    }
+  },
+  "relationshipTypes": {
+    "HAS": {
+      "label": "包含",
+      "description": "设备类别 → 设备",
+      "from": "EquipmentType",
+      "to": "Equipment",
+      "properties": {}
+    },
+    "CON_EQUIP_PROJECT": {
+      "label": "关联",
+      "description": "设备 → 项目",
+      "from": "Equipment",
+      "to": "Project",
+      "properties": {}
+    },
+    "CON_ENV_PROJECT": {
+      "label": "关联",
+      "description": "环境 → 项目",
+      "from": "Environment",
+      "to": "Project",
+      "properties": {}
+    },
+    "CON_EQUIP_INDICATOR": {
+      "label": "关联",
+      "description": "设备 → 指标",
+      "from": "Equipment",
+      "to": "Indicator",
+      "properties": {}
+    },
+    "CON_PROJECT_METHOD": {
+      "label": "关联",
+      "description": "项目 → 方法",
+      "from": "Project",
+      "to": "Method",
+      "properties": {}
+    },
+    "CON_INDICATOR_METHOD": {
+      "label": "关联",
+      "description": "指标 → 方法",
+      "from": "Indicator",
+      "to": "Method",
+      "properties": {}
+    }
+  },
+  "queryTemplates": {
+    "getEquipmentTypes": "MATCH (et:EquipmentType) RETURN et ORDER BY et.name",
+    "getEquipmentByType": "MATCH (et:EquipmentType {id: $typeId})-[:HAS]->(e:Equipment) RETURN e ORDER BY e.name",
+    "getProjectsByEquipment": "MATCH (e:Equipment {id: $equipmentId})-[:CON_EQUIP_PROJECT]->(p:Project) RETURN p ORDER BY p.name",
+    "getProjectsByEnvironment": "MATCH (env:Environment {id: $environmentId})-[:CON_ENV_PROJECT]->(p:Project) RETURN p ORDER BY p.name",
+    "getProjectsByEquipmentAndEnvironment": "MATCH (e:Equipment {id: $equipmentId})-[:CON_EQUIP_PROJECT]->(p:Project)<-[:CON_ENV_PROJECT]-(env:Environment {id: $environmentId}) RETURN p, env ORDER BY p.name",
+    "getIndicatorsByEquipment": "MATCH (e:Equipment {id: $equipmentId})-[:CON_EQUIP_INDICATOR]->(i:Indicator) RETURN i ORDER BY i.name",
+    "getMethodsByProject": "MATCH (p:Project {id: $projectId})-[:CON_PROJECT_METHOD]->(m:Method) RETURN m ORDER BY m.name",
+    "getMethodsByIndicator": "MATCH (i:Indicator {id: $indicatorId})-[:CON_INDICATOR_METHOD]->(m:Method) RETURN m ORDER BY m.name",
+    "getMethodsByProjectAndIndicator": "MATCH (p:Project)-[:CON_PROJECT_METHOD]->(m:Method)<-[:CON_INDICATOR_METHOD]-(i:Indicator) WHERE p.id IN $projectIds OR i.id IN $indicatorIds RETURN m, p, i",
+    "getAllEnvironments": "MATCH (env:Environment) RETURN env ORDER BY env.name",
+    "getNodesByType": "MATCH (n:NodeType) RETURN n ORDER BY n.name",
+    "searchNodes": "MATCH (n) WHERE n.name CONTAINS $keyword RETURN labels(n)[0] AS nodeType, n ORDER BY n.name"
+  }
+}

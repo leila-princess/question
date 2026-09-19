@@ -1,0 +1,18 @@
+# 本体：节点类型（迁移新机时通常不变）
+node_labels:
+  - EquipmentType
+  - Equipment
+  - Environment
+  - TestProject
+  - Indicator
+  - TestMethod
+  - File
+
+slot_keys:
+  Equipment: equipment_keywords
+  EquipmentType: equipment_type_keywords
+  Environment: environment_keywords
+  TestProject: project_keywords
+  Indicator: indicator_keywords
+  TestMethod: method_keywords
+  File: standard_keywords
